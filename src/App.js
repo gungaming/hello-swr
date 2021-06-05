@@ -4,19 +4,12 @@ import './App.css';
 import useSWR from 'swr';
 
 const url = 'https://aws.random.cat/meow';
-const fetcher = (url) => fetch(url).then((res) => res.json());
-
-const options = {
-  revalidateOnFocus: false,
-  // refreshInterval คือ ให้รีเฟรชทุกๆกี่วินาที ก็ว่ากันไป กำหนดเอาเอง
-  refreshInterval: 1000
-};
 
 function App() {
 
   // มี ฟังก์ชั่นที่เป็น url , fetcher
   // เพิ่ม options พวก revalidate ไรงี้ มีหลายฟังก์ชั่น
-  const { data, error } = useSWR(url, fetcher, options);
+  const { data, error } = useSWR(url);
 
   if (error) {
     return <p>Error.....</p>

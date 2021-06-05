@@ -4,9 +4,19 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+// ใช้ global Configuration
+import { SWRConfig } from 'swr';
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <SWRConfig value= {{
+      revalidateOnFocus: false,
+      fetcher
+    }}>
+      <App />
+    </SWRConfig>
   </React.StrictMode>,
   document.getElementById('root')
 );
