@@ -1,23 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
 
+import useSWR from 'swr';
+
+const url = 'https://aws.random.cat/meow';
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 function App() {
+
+  // มี ฟังก์ชั่นที่เป็น url , fetcher
+  const { data, error } = useSWR(url, fetcher);
+
+  if (error) {
+    return <p>Error.....</p>
+  }
+
+  // ขึ้นว่า loading ถ้ายังไม่มี data
+  if (!data) {
+    return <p>Loading.....</p>
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      {/* show image */}
+      <img src={data.file} alt="Meow" style={{ width: 500, marginTop: 12 }} />
+
     </div>
   );
 }
